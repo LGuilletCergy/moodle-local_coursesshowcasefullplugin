@@ -78,7 +78,7 @@ function local_coursesshowcase_goodcohort() {
     global $DB, $USER;
     $sitecontext = context_system::instance();
 
-    if (has_capability('local/coursesshowcase:manage', $sitecontext)) {
+    if (has_capability('local/coursesshowcase:seeallcourses', $sitecontext)) {
 
         return true;
     }
@@ -109,7 +109,7 @@ function local_coursesshowcase_goodcohort() {
  * @param context $context
  */
 function local_coursesshowcase_extend_settings_navigation(settings_navigation $nav, context $context) {
-    
+
     global $CFG, $COURSE, $DB, $PAGE, $USER;
 
     if ($COURSE->id > 1) {

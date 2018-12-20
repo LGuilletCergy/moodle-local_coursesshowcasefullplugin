@@ -38,16 +38,24 @@ $capabilities = array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(            
+        'archetypes' => array(
             'manager' => CAP_ALLOW
         ),
     ),
-    
+
     'local/coursesshowcase:cohortenrolments' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(            
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+    ),
+
+    'local/coursesshowcase:seeallcourses' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
             'manager' => CAP_ALLOW
         ),
     )

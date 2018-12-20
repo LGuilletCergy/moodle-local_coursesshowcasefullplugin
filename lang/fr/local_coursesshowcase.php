@@ -34,6 +34,8 @@
 $string['pluginname'] = 'Vitrine des cours';
 $string['coursesshowcase:cohortenrolments'] = 'Inscription des cohortes';
 $string['coursesshowcase:manage'] = 'Gérer la vitrine des cours';
+$string['coursesshowcase:seeallcourses'] = 'Voir tous les cours';
+$string['coursesshowcase:openchoices'] = 'Ouvrir les choix';
 $string['term'] = 'Semestre';
 $string['availablecourses'] = 'UE disponibles';
 $string['availablecourse'] = 'UE disponible';

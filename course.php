@@ -67,7 +67,8 @@ $imagewidth = '300px';
 
 if ($USER->id) {
 
-    $isenroled = $DB->record_exists('role_assignments', array('contextid' => $coursecontext->id, 'userid' => $USER->id));
+    $isenroled = $DB->record_exists('role_assignments',
+            array('contextid' => $coursecontext->id, 'userid' => $USER->id));
     $previouscourses = local_coursesshowcase_previouscourses();
     //~ $previouscourses = $DB->get_records('role_assignments', array('roleid' => 5, 'userid' => $USER->id));
 } else {
@@ -220,90 +221,127 @@ if ($coursedata->holderid) {
     }
 }
 
-/*
-echo '<p id="showcasebottom"></p>';
+if ($timestamp < 1546819200) {
 
-$goodcohort = local_coursesshowcase_goodcohort();
-if (!$goodcohort && !$category->idnumber) {
-    echo "<p style='font-weight:bold;color:red;text-align:center'>";
-    echo get_string('badcohort', 'local_coursesshowcase');
-    echo "</p>";
-} else if (!$coursedata->oddterm) { // La condition devra être changée lors du passage au second semestre.
-    echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notonoddterm', 'local_coursesshowcase')."</p>";
-} else if ($isenroled) {
-    echo "<p style='text-align:center'><span style='font-weight:bold;color:green'>".get_string('youenroled', 'local_coursesshowcase')."</span>";
-    echo "&nbsp;&nbsp;<a href='$CFG->wwwroot/course/view.php?id=$courseid'><button class='btn btn-primary'>";
-    echo get_string('gotocourse', 'local_coursesshowcase')."</button></a></p>";
-} else if ($remainingplaces) {
-    if ($askenrol) {
-        require_login();
-        $selfenrolmethod = $DB->get_record('enrol', array('courseid' => $courseid, 'enrol' => 'self'));
-        if (!$canenrol || !$selfenrolmethod) {
-            echo "<p style='font-weight:bold;color:red;text-align:center'>";
-            echo get_string('cantenrol', 'local_coursesshowcase');
-            echo "</p>";
-        } else if ($confirm) {
-			if ($course->category != 14) { //14 : Engagement étudiant.
-                local_coursesshowcase_unenrol($USER->id);
-            }
-            local_coursesshowcase_enrolstudent($USER->id, $selfenrolmethod, $coursecontext, $needsredirection);
-            if ($needsredirection) {
-                echo "<script type='text/javascript'>document.location.replace('$category->idnumber')</script>";
+    echo "<br><p style='font-weight:bold;color:red;text-align:center'>Vous pourrez choisir vos UE libres "
+    . "pour le second semestre entre le 7 et le 18 janvier 2019.</p>";
+} else if ($timestamp > 1546819200 && $timestamp < 1547856000) {
+
+    echo '<p id="showcasebottom"></p>';
+
+    $goodcohort = local_coursesshowcase_goodcohort();
+    if (!$goodcohort && !$category->idnumber) {
+        echo "<p style='font-weight:bold;color:red;text-align:center'>";
+        echo get_string('badcohort', 'local_coursesshowcase');
+        echo "</p>";
+    } else if ($coursedata->oddterm) { // La condition devra être changée lors du passage au nouveau premier semestre.
+
+        echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notoneventerm',
+                'local_coursesshowcase')."</p>";
+    } else if ($isenroled) {
+
+        echo "<p style='text-align:center'><span style='font-weight:bold;color:green'>".get_string('youenroled'
+                , 'local_coursesshowcase')."</span>";
+        echo "&nbsp;&nbsp;<a href='$CFG->wwwroot/course/view.php?id=$courseid'><button class='btn btn-primary'>";
+        echo get_string('gotocourse', 'local_coursesshowcase')."</button></a></p>";
+    } else if ($remainingplaces) {
+
+        if ($askenrol) {
+
+            require_login();
+            $selfenrolmethod = $DB->get_record('enrol', array('courseid' => $courseid, 'enrol' => 'self'));
+            if (!$canenrol || !$selfenrolmethod) {
+                echo "<p style='font-weight:bold;color:red;text-align:center'>";
+                echo get_string('cantenrol', 'local_coursesshowcase');
+                echo "</p>";
+            } else if ($confirm) {
+
+                if ($course->category != 14) { //14 : Engagement étudiant.
+
+                    local_coursesshowcase_unenrol($USER->id);
+                }
+
+                local_coursesshowcase_enrolstudent($USER->id, $selfenrolmethod, $coursecontext, $needsredirection);
+
+                if ($needsredirection) {
+
+                    echo "<script type='text/javascript'>document.location.replace('$category->idnumber')</script>";
+                } else {
+
+                    $showcaseurl = new moodle_url($moodlefilename, array('id' => $courseid, 'term' => $term));
+                    redirect($showcaseurl);
+                }
             } else {
-                $showcaseurl = new moodle_url($moodlefilename, array('id' => $courseid, 'term' => $term));
-                redirect($showcaseurl);
+
+                echo "<p style='text-align:center'>";
+                if ($previouscourses && $category->id != 14) { //14: Engagement étudiant
+                    echo "<span style='font-weight:bold;color:orange'>".get_string('reallyenrolunenrol',
+                            'local_coursesshowcase')."</span><br>";
+                    foreach ($previouscourses as $previouscourse) {
+                        echo "$previouscourse->fullname<br>";
+                    }
+                } else {
+                    echo "<span style='font-weight:bold;color:orange'>".get_string('reallyenrol',
+                            'local_coursesshowcase')."</span>";
+                }
+
+                echo "<br><a href='course.php?id=$courseid&term=$term&enrol=1&confirm=1#showcasebottom'>"
+                        . "<button class='btn btn-success'>".get_string('yes')."</button></a>";
+                echo "&nbsp;&nbsp;<a href='course.php?id=$courseid&term=$term'>".get_string('cancel')."</a>";
+                echo "</p>";
             }
         } else {
-			echo "<p style='text-align:center'>";
-			if ($previouscourses && $category->id != 14) { //14: Engagement étudiant
-                echo "<span style='font-weight:bold;color:orange'>".get_string('reallyenrolunenrol', 'local_coursesshowcase')."</span><br>";
-                foreach ($previouscourses as $previouscourse) {
-					echo "$previouscourse->fullname<br>";
-				}
-            } else {
-                echo "<span style='font-weight:bold;color:orange'>".get_string('reallyenrol', 'local_coursesshowcase')."</span>";
-            }
-            echo "<br><a href='course.php?id=$courseid&term=$term&enrol=1&confirm=1#showcasebottom'><button class='btn btn-success'>".get_string('yes')."</button></a>";
-            echo "&nbsp;&nbsp;<a href='course.php?id=$courseid&term=$term'>".get_string('cancel')."</a>";
-            echo "</p>";
-		}
+            //Bouton "Je choisis cette UE".
+            $sitecontext = context_system::instance();
+
+            if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
+                //A retirer pour ouvrir les choix
+                echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1"
+                        . "#showcasebottom'><button class='btn btn-success'>".
+                        get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
+            }  //A retirer pour ouvrir les choix
+        }
     } else {
-        //Bouton "Je choisis cette UE".
-        if (($USER->username == 'berrando') || ($USER->username == 'cabidib')) {  //A retirer pour ouvrir les choix
-            echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1#showcasebottom'><button class='btn btn-success'>"
-	             .get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
-        }  //A retirer pour ouvrir les choix
+
+        // Il n'y a plus de place.
+        if ($wanted) {
+
+            //L'utilisateur vient de cliquer sur "J'aurais voulu choisir cette UE".
+            require_login();
+            $latedemand = new stdClass();
+            $latedemand->courseid = $courseid;
+            $latedemand->userid = $USER->id;
+            $latedemand->timecreated = time();
+            $latedemand->id = $DB->insert_record('local_coursesshowcase_wanted', $latedemand);
+            $recordeddemand = true;
+        } else if ($USER->id) {
+
+            $recordeddemand = $DB->record_exists('local_coursesshowcase_wanted',
+                    array('courseid' => $courseid, 'userid' => $USER->id));
+        } else {
+
+            $recordeddemand = false;
+        }
+        if ($recordeddemand) {
+
+            echo "<p style='text-align:center'><span style='font-weight:bold'>".get_string('recordedwish',
+                    'local_coursesshowcase')."</span>";
+        } else {
+
+            if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {  //A retirer pour ouvrir les choix
+
+                // Bouton "J'aurais voulu choisir cette UE".
+                echo '<p>'.get_string('noroomleft', 'local_coursesshowcase').'</p>';
+                echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&wanted=1#"
+                        . "showcasebottom'>";
+                echo "<button class='btn btn-danger'>".get_string('wantedtoenrol',
+                        'local_coursesshowcase')."</button></a></p>";
+            }  //A retirer pour ouvrir les choix
+        }
     }
 } else {
-    // Il n'y a plus de place.
-    if ($wanted) {
-        //L'utilisateur vient de cliquer sur "J'aurais voulu choisir cette UE".
-        require_login();
-        $latedemand = new stdClass();
-        $latedemand->courseid = $courseid;
-        $latedemand->userid = $USER->id;
-        $latedemand->timecreated = time();
-        $latedemand->id = $DB->insert_record('local_coursesshowcase_wanted', $latedemand);
-        $recordeddemand = true;
-    } else if ($USER->id) {
-        $recordeddemand = $DB->record_exists('local_coursesshowcase_wanted', array('courseid' => $courseid, 'userid' => $USER->id));
-    } else {
-		$recordeddemand = false;
-	}
-    if ($recordeddemand) {
-        echo "<p style='text-align:center'><span style='font-weight:bold'>".get_string('recordedwish', 'local_coursesshowcase')."</span>";
-    } else {
-        if (($USER->username == 'berrando') || ($USER->username == 'cabidib')) {  //A retirer pour ouvrir les choix
-            // Bouton "J'aurais voulu choisir cette UE".
-            echo '<p>'.get_string('noroomleft', 'local_coursesshowcase').'</p>';
-            echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&wanted=1#showcasebottom'>";
-            echo "<button class='btn btn-danger'>".get_string('wantedtoenrol', 'local_coursesshowcase')."</button></a></p>";
-        }  //A retirer pour ouvrir les choix
-    }
-}
-*/
 
-echo "<br><p style='font-weight:bold;color:red;text-align:center'>Vous pourrez choisir vos UE libres"
-. " pour le second semestre entre le 7 et le 18 janvier 2019.</p>";
+    echo "<br><p style='font-weight:bold;color:red;text-align:center'>Vous ne pouvez plus choisir vos UE libres</p>";
+}
 
 echo $OUTPUT->footer();

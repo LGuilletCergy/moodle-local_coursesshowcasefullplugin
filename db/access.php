@@ -58,5 +58,14 @@ $capabilities = array(
         'archetypes' => array(
             'manager' => CAP_ALLOW
         ),
+    ),
+
+    'local/coursesshowcase:openchoices' => array(
+        'riskbitmask' => RISK_SPAM | RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
     )
 );

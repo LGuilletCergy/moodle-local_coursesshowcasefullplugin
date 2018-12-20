@@ -34,6 +34,8 @@
 $string['pluginname'] = 'Courses showcase';
 $string['coursesshowcase:cohortenrolments'] = 'Cohorts enrolments';
 $string['coursesshowcase:manage'] = 'Manage courses showcase';
+$string['coursesshowcase:seeallcourses'] = 'See all courses';
+$string['coursesshowcase:openchoices'] = 'Open choices';
 $string['term'] = 'Term';
 $string['availablecourses'] = 'available courses';
 $string['availablecourse'] = 'available course';

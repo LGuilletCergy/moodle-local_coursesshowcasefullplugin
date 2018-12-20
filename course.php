@@ -221,11 +221,11 @@ if ($coursedata->holderid) {
     }
 }
 
-if ($timestamp < 1546819200 && $USER->username != 'lguillet') {
+if ($timestamp < 1546819200) {
 
     echo "<br><p style='font-weight:bold;color:red;text-align:center'>Vous pourrez choisir vos UE libres "
     . "pour le second semestre entre le 7 et le 18 janvier 2019.</p>";
-} else if (($timestamp > 1546819200 && $timestamp < 1547856000) || $USER->username == 'lguillet') {
+} else if (($timestamp > 1546819200 && $timestamp < 1547856000)) {
 
     echo '<p id="showcasebottom"></p>';
 

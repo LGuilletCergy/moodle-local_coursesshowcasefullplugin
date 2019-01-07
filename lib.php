@@ -672,8 +672,9 @@ function local_coursesshowcase_numbercolor($number) {
 function local_coursesshowcase_freerooms($coursecontext, $coursedata) {
 
     global $DB;
-    $sql = "SELECT DISTINCT userid FROM {role_assignments} WHERE roleid = 5 AND contextid = $coursecontext->id";
+    $sql = "SELECT DISTINCT userid FROM {role_assignments} WHERE roleid = 5 AND contextid = $coursecontext->id AND timemodified > 1546766069";
     $students = $DB->get_records_sql($sql);
+
     $nbstudents = count($students);
     //~ $nbstudents = $DB->count_records('role_assignments', array('roleid' => 5, 'contextid' => $coursecontext->id));
     $remainingplaces = $coursedata->capacity - $nbstudents;

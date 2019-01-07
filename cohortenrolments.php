@@ -119,6 +119,11 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
         $previouscourseid = 0;
 
         foreach ($studentassignments as $studentassignment) {
+			
+			global $USER;
+			if ($studentassignment < 1546766069) {
+			    continue;
+			}
 
             $context = $DB->get_record('context', array('id' => $studentassignment->contextid));
             $course = $DB->get_record('course', array('id' => $context->instanceid));
@@ -144,7 +149,9 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
         $previouswishcourseid = 0;
 
         foreach ($studentwishes as $studentwish) {
-
+			if ($studentwish->timecreated < 1546766069) {
+			    continue;
+			}
             $wishcourse = $DB->get_record('course', array('id' => $studentwish->courseid));
 
             if ($wishcourse->id != $previouswishcourseid) {

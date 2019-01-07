@@ -105,7 +105,7 @@ if (!$needsredirection) {
     echo "<p><span style='font-weight:bold'>".get_string('taughtonterms', 'local_coursesshowcase')." :"
             . " </span>$courseterms</p>";
 
-    if ($coursedata->capacity) {
+    if ($coursedata->capacity && $category->idnumber != "Culture") {
 
         echo "<p><span style='font-weight:bold'>".get_string('capacity', 'local_coursesshowcase')." :"
                 . " </span>$coursedata->capacity étudiant(e)s</p>";
@@ -337,6 +337,6 @@ if ($category->idnumber != "Culture") {
     }
 } else {
 
-    echo get_string('contactculture', 'local_coursesshowcase');
+    echo "<p style='text-align:center'>".get_string('contactculture', 'local_coursesshowcase')."</p>";
 }
 echo $OUTPUT->footer();

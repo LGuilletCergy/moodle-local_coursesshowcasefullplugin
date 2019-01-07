@@ -337,6 +337,6 @@ if ($category->idnumber != "Culture") {
     }
 } else {
 
-    echo get_string('contactculture', 'local_courseshowcase');
+    echo get_string('contactculture', 'local_coursesshowcase');
 }
 echo $OUTPUT->footer();

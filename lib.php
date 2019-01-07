@@ -450,7 +450,7 @@ function local_coursesshowcase_tallcourse($course, $term, $activecategory) {
 
         $html .= "<td style='text-align:left;width:50%'>$coursedata->level $coursedata->training</td>";
     }
-    if (!$needsredirection /*|| !$remainingplaces*/) {
+    if (!$needsredirection && $category->idnumber != "Culture"/*|| !$remainingplaces*/) {
 
         $html .= "<td style='text-align:right;width:50%'>".local_coursesshowcase_numbercolor($remainingplaces).""
                 . " places restantes</td>";

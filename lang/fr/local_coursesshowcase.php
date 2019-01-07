@@ -86,3 +86,4 @@ $string['recordedwish'] = 'Votre souhait a été enregistré. Souvenez-vous qu\'
 $string['reallyenrolunenrol'] = 'Voulez-vous vraiment choisir cette UE ? Cela annulera votre choix précédent :';
 $string['goodcohort'] = 'Les catégories grisées sont réservées aux étudiants des UFR LSH et ST, qui doivent se connecter pour y faire un choix.';
 $string['badcohort'] = 'Cette UE est réservée aux étudiants des UFR LSH et ST. Ces étudiants doivent se connecter pour y faire un choix.';
+$string['contactculture'] = 'Pour choisir cette UE, merci de contacter le service culture.';

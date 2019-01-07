@@ -221,11 +221,7 @@ if ($coursedata->holderid) {
     }
 }
 
-if ($timestamp < 1546819200) {
-
-    echo "<br><p style='font-weight:bold;color:red;text-align:center'>Vous pourrez choisir vos UE libres "
-    . "pour le second semestre entre le 7 et le 18 janvier 2019.</p>";
-} else if (($timestamp > 1546819200 && $timestamp < 1547856000)) {
+if ($category->idnumber != "Culture") {
 
     echo '<p id="showcasebottom"></p>';
 
@@ -341,7 +337,6 @@ if ($timestamp < 1546819200) {
     }
 } else {
 
-    echo "<br><p style='font-weight:bold;color:red;text-align:center'>Vous ne pouvez plus choisir vos UE libres</p>";
+    echo get_string('contactculture', 'local_courseshowcase');
 }
-
 echo $OUTPUT->footer();

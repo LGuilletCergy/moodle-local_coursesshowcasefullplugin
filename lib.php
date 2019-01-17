@@ -635,21 +635,21 @@ function local_coursesshowcase_enrolstudent($userid, $selfenrolmethod, $courseco
         $DB->insert_record('role_assignments', $roleassignment);
     }
 
-    //~ if (!$needsredirection) {
-        //~ $headers = 'From: noreply@ue-libres.u-cergy.fr' . "\r\n" .'MIME-Version: 1.0' . "\r\n".
-        //~ 'Reply-To: noreply@ue-libres.u-cergy.fr' . "\r\n" .'Content-type: text/html; charset=utf-8' . "\r\n".
-        //~ 'X-Mailer: PHP/' . phpversion();
-        //~ $to = $USER->email;
-        //~ $course = $DB->get_record('course', array('id' => $coursecontext->instanceid));
-        //~ $subject = "Choix de l'UE libre $course->fullname";
-        //~ $message = "<br><h3>UE libres - Université de Cergy-Pontoise</h3>";
-        //~ $message .= "<p>Bonjour,<br>Votre choix de l'UE libre $course->fullname est enregistré.</p>";
-        //~ $message .= "<p>Ce choix n'a pas valeur d'inscription définitive. En particulier,
-        // il sera annulé si vous en formulez un autre, sur cette plateforme ou ailleurs.</p>";
-        //~ $message .= "<p>L'équipe UE libres</p>";
-        //~ $message .= "<p>PS : Ceci est un message automatique. Merci de ne pas y répondre.</p>";
-        //~ mail($to, $subject, $message, $headers);
-    //~ }
+    if (!$needsredirection) {
+        $headers = 'From: noreply@ue-libres.u-cergy.fr' . "\r\n" .'MIME-Version: 1.0' . "\r\n".
+        'Reply-To: noreply@ue-libres.u-cergy.fr' . "\r\n" .'Content-type: text/html; charset=utf-8' . "\r\n".
+        'X-Mailer: PHP/' . phpversion();
+        $to = $USER->email;
+        $course = $DB->get_record('course', array('id' => $coursecontext->instanceid));
+        $subject = "Choix de l'UE libre $course->fullname";
+        $message = "<br><h3>UE libres - Université de Cergy-Pontoise</h3>";
+        $message .= "<p>Bonjour,<br>Votre choix de l'UE libre $course->fullname est enregistré.</p>";
+        $message .= "<p>Ce choix n'a pas valeur d'inscription définitive. En particulier,
+        //~ // il sera annulé si vous en formulez un autre, sur cette plateforme ou ailleurs.</p>";
+        $message .= "<p>L'équipe UE libres</p>";
+        $message .= "<p>PS : Ceci est un message automatique. Merci de ne pas y répondre.</p>";
+        mail($to, $subject, $message, $headers);
+    }
 }
 
 function local_coursesshowcase_numbercolor($number) {
@@ -695,7 +695,9 @@ function local_coursesshowcase_unenrol($userid) {
     global $DB;
     $userenrolments = $DB->get_records('user_enrolments', array('userid' => $userid));
     foreach ($userenrolments as $userenrolment) {
-
+        if ($userenrolment->timecreated < 1546766069) {
+            continue;
+        }
         $enrolmethod = $DB->get_record('enrol', array('id' => $userenrolment->enrolid));
 
         if ($enrolmethod->enrol == 'self') {
@@ -731,7 +733,9 @@ function local_coursesshowcase_previouscourses() {
     $userenrolments = $DB->get_records('user_enrolments', array('userid' => $USER->id));
 
     foreach ($userenrolments as $userenrolment) {
-
+        if ($userenrolment->timecreated < 1546766069) {
+            continue;
+        }
         $enrolmethod = $DB->get_record('enrol', array('id' => $userenrolment->enrolid));
 
         if ($enrolmethod->enrol == 'self') {

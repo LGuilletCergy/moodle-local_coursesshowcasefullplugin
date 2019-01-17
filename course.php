@@ -67,13 +67,12 @@ $imagewidth = '300px';
 
 if ($USER->id) {
 
-    $isenroled = $DB->record_exists('role_assignments',
-            array('contextid' => $coursecontext->id, 'userid' => $USER->id));
+    //~ $isenroled = $DB->record_exists('role_assignments', array('contextid' => $coursecontext->id, 'userid' => $USER->id));
     $previouscourses = local_coursesshowcase_previouscourses();
     //~ $previouscourses = $DB->get_records('role_assignments', array('roleid' => 5, 'userid' => $USER->id));
 } else {
 
-    $isenroled = false;
+    //~ $isenroled = false;
     $previouscourses = null;
 }
 
@@ -234,7 +233,7 @@ if ($category->idnumber != "Culture") {
 
         echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notoneventerm',
                 'local_coursesshowcase')."</p>";
-    } else if ($isenroled) {
+    } else if ($previouscourses) {
 
         echo "<p style='text-align:center'><span style='font-weight:bold;color:green'>".get_string('youenroled'
                 , 'local_coursesshowcase')."</span>";
@@ -290,12 +289,12 @@ if ($category->idnumber != "Culture") {
             //Bouton "Je choisis cette UE".
             $sitecontext = context_system::instance();
 
-            if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
+            //if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
                 //A retirer pour ouvrir les choix
                 echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1"
                         . "#showcasebottom'><button class='btn btn-success'>".
                         get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
-            }  //A retirer pour ouvrir les choix
+            //}  //A retirer pour ouvrir les choix
         }
     } else {
 
@@ -324,7 +323,7 @@ if ($category->idnumber != "Culture") {
                     'local_coursesshowcase')."</span>";
         } else {
 
-            if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {  //A retirer pour ouvrir les choix
+           // if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {  //A retirer pour ouvrir les choix
 
                 // Bouton "J'aurais voulu choisir cette UE".
                 echo '<p>'.get_string('noroomleft', 'local_coursesshowcase').'</p>';
@@ -332,11 +331,11 @@ if ($category->idnumber != "Culture") {
                         . "showcasebottom'>";
                 echo "<button class='btn btn-danger'>".get_string('wantedtoenrol',
                         'local_coursesshowcase')."</button></a></p>";
-            }  //A retirer pour ouvrir les choix
+         //   }  //A retirer pour ouvrir les choix
         }
     }
 } else {
 
-    echo "<p style='text-align:center'>".get_string('contactculture', 'local_coursesshowcase')."</p>";
+    //~ echo "<p style='text-align:center'>".get_string('contactculture', 'local_coursesshowcase')."</p>";
 }
 echo $OUTPUT->footer();

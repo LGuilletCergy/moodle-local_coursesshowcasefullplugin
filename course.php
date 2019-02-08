@@ -67,12 +67,12 @@ $imagewidth = '300px';
 
 if ($USER->id) {
 
-    //~ $isenroled = $DB->record_exists('role_assignments', array('contextid' => $coursecontext->id, 'userid' => $USER->id));
+    $isenroled = $DB->record_exists('role_assignments', array('contextid' => $coursecontext->id, 'userid' => $USER->id));
     $previouscourses = local_coursesshowcase_previouscourses();
     //~ $previouscourses = $DB->get_records('role_assignments', array('roleid' => 5, 'userid' => $USER->id));
 } else {
 
-    //~ $isenroled = false;
+    $isenroled = false;
     $previouscourses = null;
 }
 
@@ -233,7 +233,7 @@ if ($category->idnumber != "Culture") {
 
         echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notoneventerm',
                 'local_coursesshowcase')."</p>";
-    } else if ($previouscourses) {
+    } else if ($isenroled) {
 
         echo "<p style='text-align:center'><span style='font-weight:bold;color:green'>".get_string('youenroled'
                 , 'local_coursesshowcase')."</span>";
@@ -241,7 +241,7 @@ if ($category->idnumber != "Culture") {
         echo get_string('gotocourse', 'local_coursesshowcase')."</button></a></p>";
     } else if ($remainingplaces) {
 
-        if ($askenrol) {
+        if ($askenrol && false) { // Retirer le false quand les inscriptions sont ouvertes.
 
             require_login();
             $selfenrolmethod = $DB->get_record('enrol', array('courseid' => $courseid, 'enrol' => 'self'));
@@ -262,7 +262,6 @@ if ($category->idnumber != "Culture") {
 
                     echo "<script type='text/javascript'>document.location.replace('$category->idnumber')</script>";
                 } else {
-
                     $showcaseurl = new moodle_url($moodlefilename, array('id' => $courseid, 'term' => $term));
                     redirect($showcaseurl);
                 }
@@ -289,12 +288,12 @@ if ($category->idnumber != "Culture") {
             //Bouton "Je choisis cette UE".
             $sitecontext = context_system::instance();
 
-            //if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
+            if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
                 //A retirer pour ouvrir les choix
                 echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1"
                         . "#showcasebottom'><button class='btn btn-success'>".
                         get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
-            //}  //A retirer pour ouvrir les choix
+            }  //A retirer pour ouvrir les choix
         }
     } else {
 

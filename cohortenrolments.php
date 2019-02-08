@@ -96,7 +96,7 @@ if (!$export) {
 
 if ($cohortid) {
 
-    $cohortuserlines = local_coursesshowcase_cohortenrolments($cohortid, $code);
+    $cohortuserlines = local_coursesshowcase_cohortenrolments($cohortid, $code, $export);
 }
 
 //--------------------
@@ -113,17 +113,14 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
     $userlines = array();
     foreach ($users as $user) {
 
-        $studentassignments = $DB->get_records('role_assignments', array('userid' => $user->id, 'roleid' => 5),
-                'contextid');
+        $studentassignments = $DB->get_records('role_assignments', array('userid' => $user->id, 'roleid' => 5), 'contextid');
         $user->enroledin = '';
         $previouscourseid = 0;
-
         foreach ($studentassignments as $studentassignment) {
-			
-			global $USER;
-			if ($studentassignment < 1546766069) {
+			if ($studentassignment->timemodified < 1546766069) {
 			    continue;
 			}
+//~ global $USER; if ($USER->username == 'berrando') print_object($studentassignment);
 
             $context = $DB->get_record('context', array('id' => $studentassignment->contextid));
             $course = $DB->get_record('course', array('id' => $context->instanceid));
@@ -171,7 +168,7 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
 }
 
 
-function local_coursesshowcase_cohortenrolments($cohortid, $code) {
+function local_coursesshowcase_cohortenrolments($cohortid, $code, $export) {
 
     global $DB;
     $cohort = $DB->get_record('cohort', array('id' => $cohortid));
@@ -263,20 +260,14 @@ function local_coursesshowcase_cohorthtml($cohort, $userlines, $columntitles, $c
 }
 
 function local_coursesshowcase_needsredirection2($category) {
-
     if ($category->idnumber) {
-
         $prefix = substr($category->idnumber, 0, 4);
-
-	if ($prefix == 'http') {
-
-	    return true;
-	} else {
-
-	    return false;
-	}
+        if ($prefix == 'http') {
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        
         return false;
     }
 }

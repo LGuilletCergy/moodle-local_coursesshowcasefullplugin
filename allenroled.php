@@ -52,7 +52,8 @@ $PAGE->set_pagelayout('standard');
 $OUTPUT->header();
 
 $sql = "SELECT ra.id, ra.userid, ctx.instanceid AS courseid FROM `mdl_role_assignments` ra,"
-        . " mdl_context ctx, mdl_user u WHERE ra.roleid = 5 AND ctx.id = ra.contextid ORDER BY ra.userid";
+        . " mdl_context ctx, mdl_user u WHERE ra.roleid = 5 AND ctx.id = ra.contextid ORDER BY ra.userid AND"
+        . " ra.timemodified > 1546766069";
 
 $roleassignments = $DB->get_records('role_assignments', array('roleid' => 5), 'userid');
 

@@ -56,7 +56,7 @@ foreach ($listassignmentstoswitch as $assignmenttoswitch) {
 
     $manualenrolment = $DB->get_record('enrol', array('enrol' => 'manual', 'courseid' => $courseid));
 
-    $manualplugin->unenrol_user($manualenrolment, $usertounenrol->userid);
+    $manualplugin->unenrol_user($manualenrolment, $usertounenrol->id);
 
-    $manualplugin->enrol_user($manualenrolment, $usertoenrol->id, $roleid);
+    //$manualplugin->enrol_user($manualenrolment, $usertoenrol->id, $roleid);
 }

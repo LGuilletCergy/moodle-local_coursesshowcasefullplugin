@@ -34,20 +34,89 @@
 define('CLI_SCRIPT', true);
 require_once( __DIR__.'/../../config.php');
 
-require_once($CFG->dirroot . '/enrol/manual/externallib.php');
+require_once($CFG->dirroot . '/cohort/lib.php');
+require_once($CFG->dirroot . '/lib/enrollib.php');
 
 global $DB;
 
-$rolestudentid = $DB->get_record('role', array('shortname' => 'student'))->id;
+// Il y a des inscriptions auto, des inscriptions manuelles et des inscriptions par cohorte.
 
-$listassignmentsstudents = $DB->get_records('role_assignments', array('roleid' => $rolestudentid));
+// D'abord les cohortes.
 
-foreach ($listassignmentsstudents as $assignmentstudent) {
+$cohortplugin = enrol_get_plugin('cohort');
 
-    $courseid = $DB->get_record('context', array('id' => $assignmentstudent->contextid))->instanceid;
-    $studentid = $assignmentstudent->userid;
+$listenrolcohorts = $DB->get_records('enrol', array('enrol' => 'cohort'));
 
-    enrol_manual_external::unenrol_users(array(
-        array('userid' => $studentid, 'courseid' => $courseid, 'roleid' => $rolestudentid),));
+foreach ($listenrolcohorts as $enrolcohort) {
+
+    $cohortplugin->delete_instance($enrolcohort);
 }
 
+// Puis les inscriptions auto et manuelle.
+
+$selfplugin = enrol_get_plugin('self');
+$manualplugin = enrol_get_plugin('manual');
+
+$rolestudentid = $DB->get_record('role', array('shortname' => 'student'))->id;
+
+$listselfenrolments = $DB->get_records('enrol', array('enrol' => 'self'));
+
+foreach ($listselfenrolments as $selfenrolment) {
+
+    $context = $DB->get_record('context', array('contextlevel' => CONTEXT_COURSE,
+        'instanceid' => $selfenrolment->courseid));
+
+    // Récupérer tous les étudiants inscrits aux cours
+
+    $liststudentsassignments = $DB->get_records('role_assignments',
+            array('roleid' => $rolestudentid, 'contextid' => $context->id));
+
+    foreach ($liststudentsassignments as $studentassignment) {
+
+        $sql = "SELECT * FROM {role_assignments} WHERE"
+                . " roleid != $rolestudentid AND contextid = $context->id AND userid = $liststudentsassignments->userid";
+
+        // Si il n'est pas qu'étudiant, ne lui retirer que le rôle étudiant, sinon le désinscrire.
+
+        if ($DB->record_exists_sql($sql)) {
+
+            $DB->delete_records('role_assignments',
+                    array('roleid' => $rolestudentid, 'contextid' => $context->id,
+                        'userid' => $liststudentsassignments->userid));
+        } else {
+
+            $selfplugin->unenrol_user($selfenrolment, $liststudentsassignments->userid);
+        }
+    }
+}
+
+$listmanualenrolments = $DB->get_records('enrol', array('enrol' => 'manual'));
+
+foreach ($listmanualenrolments as $manualenrolment) {
+
+    $context = $DB->get_record('context', array('contextlevel' => CONTEXT_COURSE,
+        'instanceid' => $manualenrolment->courseid));
+
+    // Récupérer tous les étudiants inscrits aux cours
+
+    $liststudentsassignments = $DB->get_records('role_assignments',
+            array('roleid' => $rolestudentid, 'contextid' => $context->id));
+
+    foreach ($liststudentsassignments as $studentassignment) {
+
+        $sql = "SELECT * FROM {role_assignments} WHERE"
+                . " roleid != $rolestudentid AND contextid = $context->id AND userid = $liststudentsassignments->userid";
+
+        // Si il n'est pas qu'étudiant, ne lui retirer que le rôle étudiant, sinon le désinscrire.
+
+        if ($DB->record_exists_sql($sql)) {
+
+            $DB->delete_records('role_assignments',
+                    array('roleid' => $rolestudentid, 'contextid' => $context->id,
+                        'userid' => $liststudentsassignments->userid));
+        } else {
+
+            $manualplugin->unenrol_user($manualenrolment, $liststudentsassignments->userid);
+        }
+    }
+}

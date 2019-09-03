@@ -38,6 +38,10 @@ require_once($CFG->dirroot . '/enrol/manual/externallib.php');
 
 global $DB;
 
+// Daniela Peslin n'a que des inscriptions manuelles. Isabelle Ben Mansour n'a que des rôles systèmes.
+
+$manualplugin = enrol_get_plugin('manual');
+
 $usertounenrol = $DB->get_record('user', array('username' => 'dpeslin'));
 $usertoenrol = $DB->get_record('user', array('username' => 'ibenmans'));
 
@@ -50,9 +54,9 @@ foreach ($listassignmentstoswitch as $assignmenttoswitch) {
 
     $courseid = $DB->get_record('context', array('id' => $assignmenttoswitch->contextid))->instanceid;
 
-    enrol_manual_external::unenrol_users(array(
-        array('userid' => $usertounenrol->id, 'courseid' => $courseid, 'roleid' => $roleid),));
+    $manualenrolment = $DB->get_record('enrol', array('enrol' => 'manual', 'courseid' => $courseid));
 
-    enrol_manual_external::enrol_users(array(
-        array('userid' => $usertoenrol->id, 'courseid' => $courseid, 'roleid' => $roleid),));
+    $manualplugin->unenrol_user($manualenrolment, $usertounenrol->userid);
+
+    $manualplugin->enrol_user($manualenrolment, $usertoenrol->id, $roleid);
 }

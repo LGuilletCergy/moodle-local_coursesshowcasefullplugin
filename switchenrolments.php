@@ -45,7 +45,7 @@ $manualplugin = enrol_get_plugin('manual');
 $usertounenrol = $DB->get_record('user', array('username' => 'dpeslin'));
 $usertoenrol = $DB->get_record('user', array('username' => 'ibenmans'));
 
-$roleid = $DB->get_record('role', array('shortname' => 'apogist'))->id;
+$roleid = $DB->get_record('role', array('shortname' => 'appuiadmin'))->id;
 
 $listassignmentstoswitch = $DB->get_records('role_assignments',
         array('userid' => $usertounenrol->id, 'roleid' => $roleid));

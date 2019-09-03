@@ -58,5 +58,5 @@ foreach ($listassignmentstoswitch as $assignmenttoswitch) {
 
     $manualplugin->unenrol_user($manualenrolment, $usertounenrol->id);
 
-    //$manualplugin->enrol_user($manualenrolment, $usertoenrol->id, $roleid);
+    $manualplugin->enrol_user($manualenrolment, $usertoenrol->id, $roleid);
 }

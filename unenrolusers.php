@@ -74,7 +74,7 @@ foreach ($listselfenrolments as $selfenrolment) {
     foreach ($liststudentsassignments as $studentassignment) {
 
         $sql = "SELECT * FROM {role_assignments} WHERE"
-                . " roleid != $rolestudentid AND contextid = $context->id AND userid = $liststudentsassignments->userid";
+                . " roleid != $rolestudentid AND contextid = $context->id AND userid = $studentassignment->userid";
 
         // Si il n'est pas qu'étudiant, ne lui retirer que le rôle étudiant, sinon le désinscrire.
 
@@ -82,10 +82,10 @@ foreach ($listselfenrolments as $selfenrolment) {
 
             $DB->delete_records('role_assignments',
                     array('roleid' => $rolestudentid, 'contextid' => $context->id,
-                        'userid' => $liststudentsassignments->userid));
+                        'userid' => $studentassignment->userid));
         } else {
 
-            $selfplugin->unenrol_user($selfenrolment, $liststudentsassignments->userid);
+            $selfplugin->unenrol_user($selfenrolment, $studentassignment->userid);
         }
     }
 }
@@ -105,7 +105,7 @@ foreach ($listmanualenrolments as $manualenrolment) {
     foreach ($liststudentsassignments as $studentassignment) {
 
         $sql = "SELECT * FROM {role_assignments} WHERE"
-                . " roleid != $rolestudentid AND contextid = $context->id AND userid = $liststudentsassignments->userid";
+                . " roleid != $rolestudentid AND contextid = $context->id AND userid = $studentassignment->userid";
 
         // Si il n'est pas qu'étudiant, ne lui retirer que le rôle étudiant, sinon le désinscrire.
 
@@ -113,10 +113,10 @@ foreach ($listmanualenrolments as $manualenrolment) {
 
             $DB->delete_records('role_assignments',
                     array('roleid' => $rolestudentid, 'contextid' => $context->id,
-                        'userid' => $liststudentsassignments->userid));
+                        'userid' => $studentassignment->userid));
         } else {
 
-            $manualplugin->unenrol_user($manualenrolment, $liststudentsassignments->userid);
+            $manualplugin->unenrol_user($manualenrolment, $studentassignment->userid);
         }
     }
 }

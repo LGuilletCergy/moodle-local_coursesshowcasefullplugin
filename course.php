@@ -235,12 +235,12 @@ if ($category->idnumber != "Culture") {
     if ($now < $CFG->currenttermregistrationstart && $coursedata->oddterm && $CFG->currentterm == 1) {
 
         echo "<p style='font-weight:bold;color:red;text-align:center'>";
-        echo get_string('registrationnotstarted', 'local_coursesshowase');
+        echo get_string('registrationnotstarted', 'local_coursesshowcase');
         echo "</p>";
     } else if ($now < $CFG->currenttermregistrationstart && $coursedata->oddterm && $CFG->currentterm == 1) {
 
         echo "<p style='font-weight:bold;color:red;text-align:center'>";
-        echo get_string('registrationnotstarted', 'local_coursesshowase');
+        echo get_string('registrationnotstarted', 'local_coursesshowcase');
         echo "</p>";
     }
 

@@ -77,6 +77,7 @@ $string['coursedetails'] = "Détails du cours";
 $string['choosecourses'] = 'Choisir une Unité d\'Enseignement';
 $string['notonoddterm'] = 'Cette UE n\'est pas proposée au premier semestre. Merci de revenir au second semestre.';
 $string['notoneventerm'] = 'Cette UE n\'est pas proposée au second semestre.';
+$string['notonanyerm'] = 'Cette UE n\'est plus proposée.';
 $string['noroomleft'] = "Il n'y a plus de place dans cette UE. Voulez-vous signaler votre souhait de suivre ce cours si une place se libère à titre exceptionnel ? Indiquez-le en cliquant sur le bouton ci-dessous.";
 $string['wantedtoenrol'] = "J'aurais voulu choisir cette UE";
 $string['firstin'] = 'Chaque UE a un nombre de places limité. Ne tardez pas à faire un choix.';

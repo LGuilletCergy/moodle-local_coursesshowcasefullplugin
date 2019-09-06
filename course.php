@@ -235,10 +235,22 @@ if ($category->idnumber != "Culture") {
         echo "<p style='font-weight:bold;color:red;text-align:center'>";
         echo get_string('badcohort', 'local_coursesshowcase');
         echo "</p>";
-    } else if ($coursedata->oddterm) { // La condition devra être changée lors du passage au nouveau premier semestre.
+    } else if (!$coursedata->oddterm && $coursedata->eventerm && $CFG->currentterm == 1) {
+        // LAURENTHACKED. Utilisation du semestre dans config.php.
+
+        echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notonoddterm',
+                'local_coursesshowcase')."</p>";
+    } else if (!$coursedata->eventerm && $CFG->currentterm == 2) {
+
+        // LAURENTHACKED. Utilisation du semestre dans config.php.
+        // On ne propose pas aux gens de revenir au premier semestre pour voir l'UE.
 
         echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notoneventerm',
                 'local_coursesshowcase')."</p>";
+    } else if (!$coursedata->oddterm && !$coursedata->eventerm) {
+
+        // LAURENTHACKED. Rajout du cas où l'UE n'est jamais proposée.
+
     } else if ($isenroled) {
 
         echo "<p style='text-align:center'><span style='font-weight:bold;color:green'>".get_string('youenroled'

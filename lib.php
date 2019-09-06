@@ -75,7 +75,7 @@ background-image: url('<?php echo $CFG->wwwroot; ?>/theme/image.php/fordson/them
 
 function local_coursesshowcase_goodcohort() {
 
-    global $DB, $USER;
+    global $DB, $USER, $CFG;
     $sitecontext = context_system::instance();
 
     if (has_capability('local/coursesshowcase:seeallcourses', $sitecontext)) {
@@ -89,9 +89,10 @@ function local_coursesshowcase_goodcohort() {
         // Peut-être à LAURENTHACK pour ne pas hardcoder les ids des cohortes à tester.
         // C'est proche de ce qu'il y a dans allenroled donc peut-être à fusionner ?
         // Différences sur le $USER utilisé.
+        // Un peu LAURENTHACK pour ne pas donner tous les accès aux LSH au semestre 1.
 
         $cohortmember4 = $DB->get_record('cohort_members', array('userid' => $USER->id, 'cohortid' => 393));
-        if ($cohortmember4) {
+        if ($cohortmember4 && $CFG->currentterm == 2) {
 
             $goodcohort = true;
         }

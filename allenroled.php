@@ -71,10 +71,11 @@ foreach ($roleassignments as $roleassignment) {
 
         // Peut-être à LAURENTHACK pour ne pas hardcoder les ids des cohortes à tester.
         //  C'est la même chose que dans lib.php avec un $user différent. Peut-être à fusionner.
+        // Un peu LAURENTHACK pour ne pas donner tous les accès aux LSH au semestre 1.
 
         $cohortmember4 = $DB->get_record('cohort_members', array('userid' => $user->id, 'cohortid' => 393));
 
-        if ($cohortmember4) {
+        if ($cohortmember4 && $CFG->currentterm == 2) {
 
             $goodcohort = true;
         }

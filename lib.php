@@ -650,8 +650,8 @@ function local_coursesshowcase_enrolstudent($userid, $selfenrolmethod, $courseco
         $subject = "Choix de l'UE libre $course->fullname";
         $message = "<br><h3>UE libres - Université de Cergy-Pontoise</h3>";
         $message .= "<p>Bonjour,<br>Votre choix de l'UE libre $course->fullname est enregistré.</p>";
-        $message .= "<p>Ce choix n'a pas valeur d'inscription définitive. En particulier,
-        //~ // il sera annulé si vous en formulez un autre, sur cette plateforme ou ailleurs.</p>";
+        $message .= "<p>Ce choix n'a pas valeur d'inscription définitive. En particulier,"
+                . " il sera annulé si vous en formulez un autre, sur cette plateforme ou ailleurs.</p>";
         $message .= "<p>L'équipe UE libres</p>";
         $message .= "<p>PS : Ceci est un message automatique. Merci de ne pas y répondre.</p>";
         mail($to, $subject, $message, $headers);

@@ -103,7 +103,7 @@ if ($cohortid) {
 
 function local_coursesshowcase_cohortuserlines($cohort, $code) {
 
-    global $DB;
+    global $DB, $CFG;
     $sql = "SELECT u.*
             FROM {cohort_members} cm, {user} u
             WHERE cm.cohortid = $cohort->id AND u.id = cm.userid
@@ -113,13 +113,18 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
     $userlines = array();
     foreach ($users as $user) {
 
-        $studentassignments = $DB->get_records('role_assignments', array('userid' => $user->id, 'roleid' => 5), 'contextid');
+        $studentassignments = $DB->get_records('role_assignments',
+                array('userid' => $user->id, 'roleid' => 5), 'contextid');
         $user->enroledin = '';
         $previouscourseid = 0;
+
+        // LAURENTHACKED. Utilisation du timestamp de config.php .
+
         foreach ($studentassignments as $studentassignment) {
-			if ($studentassignment->timemodified < 1546766069) {
-			    continue;
-			}
+
+            if ($studentassignment->timemodified < $CFG->currenttermregistrationstart) {
+                continue;
+            }
 //~ global $USER; if ($USER->username == 'berrando') print_object($studentassignment);
 
             $context = $DB->get_record('context', array('id' => $studentassignment->contextid));
@@ -145,10 +150,13 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
         $user->wanted = '';
         $previouswishcourseid = 0;
 
+        // LAURENTHACKED. Utilisation du timestamp de config.php .
+
         foreach ($studentwishes as $studentwish) {
-			if ($studentwish->timecreated < 1546766069) {
-			    continue;
-			}
+
+            if ($studentwish->timecreated < $CFG->currenttermregistrationstart) {
+                continue;
+            }
             $wishcourse = $DB->get_record('course', array('id' => $studentwish->courseid));
 
             if ($wishcourse->id != $previouswishcourseid) {

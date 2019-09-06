@@ -86,6 +86,10 @@ function local_coursesshowcase_goodcohort() {
     $goodcohort = false;
     if ($USER->id) {
 
+        // Peut-être à LAURENTHACK pour ne pas hardcoder les ids des cohortes à tester.
+        // C'est proche de ce qu'il y a dans allenroled donc peut-être à fusionner ?
+        // Différences sur le $USER utilisé.
+
         $cohortmember4 = $DB->get_record('cohort_members', array('userid' => $USER->id, 'cohortid' => 393));
         if ($cohortmember4) {
 
@@ -127,9 +131,11 @@ function local_coursesshowcase_extend_settings_navigation(settings_navigation $n
     $pagepath = $PAGE->url->get_path();
     if ($pagepath == '/') {
 
+        // LAURENTHACKED. Utilisation du currentterm dans config.php.
+
         $PAGE->set_pagelayout('standard');
         $PAGE->set_heading(get_string('choosecourses', 'local_coursesshowcase'));
-        $term = optional_param('term', 2, PARAM_INT);
+        $term = optional_param('term', $CFG->currentterm, PARAM_INT);
         $categorystyle = "";
         $categories = $DB->get_records('course_categories', array(), 'name');
 
@@ -671,8 +677,12 @@ function local_coursesshowcase_numbercolor($number) {
 
 function local_coursesshowcase_freerooms($coursecontext, $coursedata) {
 
-    global $DB;
-    $sql = "SELECT DISTINCT userid FROM {role_assignments} WHERE roleid = 5 AND contextid = $coursecontext->id AND timemodified > 1546766069";
+    // LAURENTHACKED. Utilisation du timestamp depuis config.php.
+
+    global $DB, $CFG;
+
+    $sql = "SELECT DISTINCT userid FROM {role_assignments} WHERE roleid = 5 AND"
+            . " contextid = $coursecontext->id AND $CFG->currenttermregistrationstart > 1546766069";
     $students = $DB->get_records_sql($sql);
 
     $nbstudents = count($students);
@@ -692,10 +702,12 @@ function local_coursesshowcase_freerooms($coursecontext, $coursedata) {
  */
 function local_coursesshowcase_unenrol($userid) {
 
-    global $DB;
+    // LAURENTHACKED. Utilisation du timestamp depuis config.php.
+
+    global $DB, $CFG;
     $userenrolments = $DB->get_records('user_enrolments', array('userid' => $userid));
     foreach ($userenrolments as $userenrolment) {
-        if ($userenrolment->timecreated < 1546766069) {
+        if ($userenrolment->timecreated < $CFG->currenttermregistrationstart) {
             continue;
         }
         $enrolmethod = $DB->get_record('enrol', array('id' => $userenrolment->enrolid));
@@ -728,12 +740,14 @@ function local_coursesshowcase_unenrol($userid) {
  */
 function local_coursesshowcase_previouscourses() {
 
-    global $DB, $USER;
+    // LAURENTHACKED. Utilisation du timestamp depuis config.php.
+
+    global $DB, $USER, $CFG;
     $previouscourses = array();
     $userenrolments = $DB->get_records('user_enrolments', array('userid' => $USER->id));
 
     foreach ($userenrolments as $userenrolment) {
-        if ($userenrolment->timecreated < 1546766069) {
+        if ($userenrolment->timecreated < $CFG->currenttermregistrationstart) {
             continue;
         }
         $enrolmethod = $DB->get_record('enrol', array('id' => $userenrolment->enrolid));

@@ -34,8 +34,10 @@
 require_once('../../config.php');
 require_once("$CFG->dirroot/local/coursesshowcase/lib.php");
 
+// LAURENTHACKED. Utilisation du currentterm dans config.php.
+
 $courseid = required_param('id', PARAM_INT);
-$term = optional_param('term', 1, PARAM_INT);
+$term = optional_param('term', $CFG->currentterm, PARAM_INT);
 $askenrol = optional_param('enrol', 0, PARAM_INT);
 $wanted = optional_param('wanted', 0, PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
@@ -79,6 +81,10 @@ if ($USER->id) {
 $canenrol = local_coursesshowcase_canenrol($courseid);
 
 echo $OUTPUT->header();
+
+// LAURENTHACKED. Utilisé pour des tests par rapport au timestamp de $CFG.
+
+$now = time();
 
 echo "<p><a href='$categoryurl'>".get_string('back')."</a></p>";
 echo "<h1>$course->fullname</h1><br>";
@@ -241,7 +247,7 @@ if ($category->idnumber != "Culture") {
         echo get_string('gotocourse', 'local_coursesshowcase')."</button></a></p>";
     } else if ($remainingplaces) {
 
-        if ($askenrol && false) { // Retirer le false quand les inscriptions sont ouvertes.
+        if ($askenrol && $CFG->currenttermregistrationstart <= $now && $now < $CFG->currenttermregistrationend) { // Retirer le false quand les inscriptions sont ouvertes. LAURENTHACK
 
             require_login();
             $selfenrolmethod = $DB->get_record('enrol', array('courseid' => $courseid, 'enrol' => 'self'));
@@ -288,12 +294,16 @@ if ($category->idnumber != "Culture") {
             //Bouton "Je choisis cette UE".
             $sitecontext = context_system::instance();
 
-            if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
-                //A retirer pour ouvrir les choix
-                echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1"
-                        . "#showcasebottom'><button class='btn btn-success'>".
-                        get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
-            }  //A retirer pour ouvrir les choix
+            //if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
+                //A retirer pour ouvrir les choix. LAURENTHACKED
+                // Si on est entre les dates d'ouverture, on montre le bouton, non sinon.
+
+                if ($CFG->currenttermregistrationstart <= $now && $now < $CFG->currenttermregistrationend) {
+                    echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1"
+                            . "#showcasebottom'><button class='btn btn-success'>".
+                            get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
+                }
+            //}  //A retirer pour ouvrir les choix. LAURENTHACKED
         }
     } else {
 
@@ -322,7 +332,11 @@ if ($category->idnumber != "Culture") {
                     'local_coursesshowcase')."</span>";
         } else {
 
-           // if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {  //A retirer pour ouvrir les choix
+           // if (has_capability('local/coursesshowcase:openchoices', $sitecontext)) {
+           // //A retirer pour ouvrir les choix. LAURENTHACKED
+           //
+
+            if ($CFG->currenttermregistrationstart <= $now && $now < $CFG->currenttermregistrationend) {
 
                 // Bouton "J'aurais voulu choisir cette UE".
                 echo '<p>'.get_string('noroomleft', 'local_coursesshowcase').'</p>';
@@ -330,7 +344,8 @@ if ($category->idnumber != "Culture") {
                         . "showcasebottom'>";
                 echo "<button class='btn btn-danger'>".get_string('wantedtoenrol',
                         'local_coursesshowcase')."</button></a></p>";
-         //   }  //A retirer pour ouvrir les choix
+            }
+         //   }  //A retirer pour ouvrir les choix. LAURENTHACKED
         }
     }
 } else {

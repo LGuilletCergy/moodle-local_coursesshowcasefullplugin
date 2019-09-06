@@ -51,9 +51,11 @@ $PAGE->set_pagelayout('standard');
 
 $OUTPUT->header();
 
+// LAURENTHACKED. Utilisation du timestamp de config.php .
+
 $sql = "SELECT ra.id, ra.userid, ctx.instanceid AS courseid FROM `mdl_role_assignments` ra,"
         . " mdl_context ctx, mdl_user u WHERE ra.roleid = 5 AND ctx.id = ra.contextid ORDER BY ra.userid AND"
-        . " ra.timemodified > 1546766069";
+        . " ra.timemodified > $CFG->currenttermregistrationstart";
 
 $roleassignments = $DB->get_records('role_assignments', array('roleid' => 5), 'userid');
 
@@ -66,6 +68,9 @@ foreach ($roleassignments as $roleassignment) {
     $goodcohort = false;
 
     if ($user->id) {
+
+        // Peut-être à LAURENTHACK pour ne pas hardcoder les ids des cohortes à tester.
+        //  C'est la même chose que dans lib.php avec un $user différent. Peut-être à fusionner.
 
         $cohortmember4 = $DB->get_record('cohort_members', array('userid' => $user->id, 'cohortid' => 393));
 

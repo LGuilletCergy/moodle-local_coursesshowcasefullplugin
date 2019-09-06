@@ -682,7 +682,7 @@ function local_coursesshowcase_freerooms($coursecontext, $coursedata) {
     global $DB, $CFG;
 
     $sql = "SELECT DISTINCT userid FROM {role_assignments} WHERE roleid = 5 AND"
-            . " contextid = $coursecontext->id AND $CFG->currenttermregistrationstart > 1546766069";
+            . " contextid = $coursecontext->id AND timemodified > $CFG->currenttermregistrationstart";
     $students = $DB->get_records_sql($sql);
 
     $nbstudents = count($students);

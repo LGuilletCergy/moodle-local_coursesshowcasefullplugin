@@ -88,3 +88,4 @@ $string['reallyenrolunenrol'] = 'Voulez-vous vraiment choisir cette UE ? Cela an
 $string['goodcohort'] = 'Les catégories grisées sont réservées aux étudiants des UFR LSH et ST, qui doivent se connecter pour y faire un choix.';
 $string['badcohort'] = 'Cette UE est réservée aux étudiants des UFR LSH et ST. Ces étudiants doivent se connecter pour y faire un choix.';
 $string['contactculture'] = 'Pour choisir cette UE, merci de contacter le service culture.';
+$string['registrationnotstarted'] = 'Les inscriptions ne sont pas encore ouvertes. Elles ouvriront le 16 septembre';

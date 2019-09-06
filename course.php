@@ -230,6 +230,20 @@ if ($category->idnumber != "Culture") {
 
     echo '<p id="showcasebottom"></p>';
 
+    $now = time();
+
+    if ($now < $CFG->currenttermregistrationstart && $coursedata->oddterm && $CFG->currentterm == 1) {
+
+        echo "<p style='font-weight:bold;color:red;text-align:center'>";
+        echo get_string('registrationnotstarted', 'local_coursesshowase');
+        echo "</p>";
+    } else if ($now < $CFG->currenttermregistrationstart && $coursedata->oddterm && $CFG->currentterm == 1) {
+
+        echo "<p style='font-weight:bold;color:red;text-align:center'>";
+        echo get_string('registrationnotstarted', 'local_coursesshowase');
+        echo "</p>";
+    }
+
     $goodcohort = local_coursesshowcase_goodcohort();
     if (!$goodcohort && !$category->idnumber) {
         echo "<p style='font-weight:bold;color:red;text-align:center'>";

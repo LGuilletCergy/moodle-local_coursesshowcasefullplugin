@@ -88,3 +88,4 @@ $string['reallyenrolunenrol'] = 'Do you really want to enrol in this course. Thi
 $string['goodcohort'] = 'Grayed categories are limited to students from UFR LSH ans UFR ST, who must connect to access them.';
 $string['badcohort'] = 'This course is limited to students from UFR LSH ans UFR ST, who must connect to access it.';
 $string['contactculture'] = 'To choose this UE, please contact the culture service.';
+$string['registrationnotstarted'] = 'Registration is not allowed yet. It will start on 16 september.';

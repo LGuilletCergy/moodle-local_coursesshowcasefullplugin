@@ -226,7 +226,7 @@ if ($coursedata->holderid) {
     }
 }
 
-if ($category->idnumber != "Culture") {
+if ($category->idnumber != "Culture" && $category->idnumber != "Numérique") {
 
     echo '<p id="showcasebottom"></p>';
 

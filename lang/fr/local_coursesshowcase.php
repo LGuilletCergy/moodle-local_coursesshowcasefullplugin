@@ -80,7 +80,11 @@ $string['notoneventerm'] = 'Cette UE n\'est pas proposée au second semestre.';
 $string['notonanyerm'] = 'Cette UE n\'est plus proposée.';
 $string['noroomleft'] = "Il n'y a plus de place dans cette UE. Voulez-vous signaler votre souhait de suivre ce cours si une place se libère à titre exceptionnel ? Indiquez-le en cliquant sur le bouton ci-dessous.";
 $string['wantedtoenrol'] = "J'aurais voulu choisir cette UE";
-$string['firstin'] = 'Chaque UE a un nombre de places limité. Ne tardez pas à faire un choix.';
+$string['firstin'] = 'Chaque UE a un nombre de places limité. Ne tardez pas à faire un choix.'
+        . '<br>Assurez vous auprès de votre secrétariat pédagogique que dans votre parcours de formation '
+        . '(L1, L2 ou L3), aux semestrex de rentrées (S1, S3, S5) '
+        . ' vous avez bien une UE à choisir parmi les propositions'
+        . ' qui vous sont offertes dans la plateforme UE libres.';
 $string['noueyet'] = 'Vous n\'avez choisi aucune UE libre pour ce semestre. Vous pouvez en choisir une dans cette liste.';
 $string['youenroledin'] = 'Vous avez déjà choisi une UE libre pour ce semestre. Si vous en choisissez une autre, votre premier choix sera annulé.';
 $string['recordedwish'] = 'Votre souhait a été enregistré. Souvenez-vous qu\'y a peu de chances que votre demande tardive puisse être satisfaite. Si ce n\'est pas encore fait, choisissez vite une autre UE.';

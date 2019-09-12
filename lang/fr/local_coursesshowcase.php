@@ -82,7 +82,7 @@ $string['noroomleft'] = "Il n'y a plus de place dans cette UE. Voulez-vous signa
 $string['wantedtoenrol'] = "J'aurais voulu choisir cette UE";
 $string['firstin'] = 'Chaque UE a un nombre de places limité. Ne tardez pas à faire un choix.'
         . '<br>Assurez vous auprès de votre secrétariat pédagogique que dans votre parcours de formation '
-        . '(L1, L2 ou L3), aux semestrex de rentrées (S1, S3, S5) '
+        . '(L1, L2 ou L3), aux semestres de rentrées (S1, S3, S5) '
         . ' vous avez bien une UE à choisir parmi les propositions'
         . ' qui vous sont offertes dans la plateforme UE libres.';
 $string['noueyet'] = 'Vous n\'avez choisi aucune UE libre pour ce semestre. Vous pouvez en choisir une dans cette liste.';

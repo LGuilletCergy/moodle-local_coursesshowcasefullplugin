@@ -35,7 +35,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component  = 'local_coursesshowcase';
 $plugin->release    = '0.2';
-$plugin->version    = 2019091200;
+$plugin->version    = 2019091201;
 $plugin->requires   = 2014022000;
 $plugin->maturity   = MATURITY_STABLE;
 

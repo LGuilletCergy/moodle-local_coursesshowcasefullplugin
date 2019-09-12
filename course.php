@@ -110,7 +110,7 @@ if (!$needsredirection) {
     echo "<p><span style='font-weight:bold'>".get_string('taughtonterms', 'local_coursesshowcase')." :"
             . " </span>$courseterms</p>";
 
-    if ($coursedata->capacity && $category->idnumber != "Culture") {
+    if ($coursedata->capacity && $category->idnumber != "Culture"  && $category->idnumber != "Numérique") {
 
         echo "<p><span style='font-weight:bold'>".get_string('capacity', 'local_coursesshowcase')." :"
                 . " </span>$coursedata->capacity étudiant(e)s</p>";

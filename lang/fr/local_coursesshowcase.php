@@ -81,7 +81,7 @@ $string['notonanyerm'] = 'Cette UE n\'est plus proposée.';
 $string['noroomleft'] = "Il n'y a plus de place dans cette UE. Voulez-vous signaler votre souhait de suivre ce cours si une place se libère à titre exceptionnel ? Indiquez-le en cliquant sur le bouton ci-dessous.";
 $string['wantedtoenrol'] = "J'aurais voulu choisir cette UE";
 $string['firstin'] = 'Chaque UE a un nombre de places limité. Ne tardez pas à faire un choix.'
-        . '<br>Assurez vous auprès de votre secrétariat pédagogique que dans votre parcours de formation '
+        . '<br>Assurez-vous auprès de votre secrétariat pédagogique que dans votre parcours de formation '
         . '(L1, L2 ou L3), aux semestres de rentrées (S1, S3, S5) '
         . ' vous avez bien une UE à choisir parmi les propositions'
         . ' qui vous sont offertes dans la plateforme UE libres.';

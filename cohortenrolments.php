@@ -122,7 +122,7 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
 
         foreach ($studentassignments as $studentassignment) {
 
-            if ($studentassignment->timemodified < $CFG->currenttermregistrationstart) {
+            if ($studentassignment->timemodified > $CFG->currenttermregistrationstart) {
                 continue;
             }
 //~ global $USER; if ($USER->username == 'berrando') print_object($studentassignment);

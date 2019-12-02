@@ -117,7 +117,7 @@ function local_coursesshowcase_extend_settings_navigation(settings_navigation $n
 
     global $CFG, $COURSE, $DB, $PAGE, $USER;
 
-    $uelibrecourse = $DB->get_record('courses', array ('idnumber' => 'UELIBRES'));
+    $uelibrecourse = $DB->get_record('course', array ('idnumber' => 'UELIBRES'));
 
     if ($COURSE->id > 1) {
 

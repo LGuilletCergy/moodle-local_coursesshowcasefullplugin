@@ -37,7 +37,7 @@ require_once("$CFG->dirroot/local/coursesshowcase/lib.php");
 // LAURENTHACKED. Utilisation du currentterm dans config.php.
 
 $courseid = required_param('id', PARAM_INT);
-$term = optional_param('term', $CFG->currentterm, PARAM_INT);
+$term = optional_param('term', $config->currentterm, PARAM_INT);
 $askenrol = optional_param('enrol', 0, PARAM_INT);
 $wanted = optional_param('wanted', 0, PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
@@ -82,7 +82,7 @@ $canenrol = local_coursesshowcase_canenrol($courseid);
 
 echo $OUTPUT->header();
 
-// LAURENTHACKED. Utilisé pour des tests par rapport au timestamp de $CFG.
+// LAURENTHACKED. Utilisé pour des tests par rapport au timestamp de $config.
 
 $now = time();
 
@@ -232,12 +232,12 @@ if ($category->idnumber != "Culture" && $category->idnumber != "Numérique") {
 
     $now = time();
 
-    if ($now < $CFG->currenttermregistrationstart && $coursedata->oddterm && $CFG->currentterm == 1) {
+    if ($now < $config->currenttermregistrationstart && $coursedata->oddterm && $config->currentterm == 1) {
 
         echo "<p style='font-weight:bold;color:red;text-align:center'>";
         echo get_string('registrationnotstarted', 'local_coursesshowcase');
         echo "</p>";
-    } else if ($now < $CFG->currenttermregistrationstart && $coursedata->oddterm && $CFG->currentterm == 1) {
+    } else if ($now < $config->currenttermregistrationstart && $coursedata->oddterm && $config->currentterm == 1) {
 
         echo "<p style='font-weight:bold;color:red;text-align:center'>";
         echo get_string('registrationnotstarted', 'local_coursesshowcase');
@@ -249,12 +249,12 @@ if ($category->idnumber != "Culture" && $category->idnumber != "Numérique") {
         echo "<p style='font-weight:bold;color:red;text-align:center'>";
         echo get_string('badcohort', 'local_coursesshowcase');
         echo "</p>";
-    } else if (!$coursedata->oddterm && $coursedata->eventerm && $CFG->currentterm == 1) {
+    } else if (!$coursedata->oddterm && $coursedata->eventerm && $config->currentterm == 1) {
         // LAURENTHACKED. Utilisation du semestre dans config.php.
 
         echo "<p style='text-align:center;color:red;font-weight:bold'>".get_string('notonoddterm',
                 'local_coursesshowcase')."</p>";
-    } else if (!$coursedata->eventerm && $CFG->currentterm == 2) {
+    } else if (!$coursedata->eventerm && $config->currentterm == 2) {
 
         // LAURENTHACKED. Utilisation du semestre dans config.php.
         // On ne propose pas aux gens de revenir au premier semestre pour voir l'UE.
@@ -273,7 +273,7 @@ if ($category->idnumber != "Culture" && $category->idnumber != "Numérique") {
         echo get_string('gotocourse', 'local_coursesshowcase')."</button></a></p>";
     } else if ($remainingplaces) {
 
-        if ($askenrol && $CFG->currenttermregistrationstart <= $now && $now < $CFG->currenttermregistrationend) { // Retirer le false quand les inscriptions sont ouvertes. LAURENTHACK
+        if ($askenrol && $config->currenttermregistrationstart <= $now && $now < $config->currenttermregistrationend) { // Retirer le false quand les inscriptions sont ouvertes. LAURENTHACK
 
             require_login();
             $selfenrolmethod = $DB->get_record('enrol', array('courseid' => $courseid, 'enrol' => 'self'));
@@ -324,7 +324,7 @@ if ($category->idnumber != "Culture" && $category->idnumber != "Numérique") {
                 //A retirer pour ouvrir les choix. LAURENTHACKED
                 // Si on est entre les dates d'ouverture, on montre le bouton, non sinon.
 
-                if ($CFG->currenttermregistrationstart <= $now && $now < $CFG->currenttermregistrationend) {
+                if ($config->currenttermregistrationstart <= $now && $now < $config->currenttermregistrationend) {
                     echo "<p style='text-align:center'><a href='course.php?id=$courseid&term=$term&enrol=1"
                             . "#showcasebottom'><button class='btn btn-success'>".
                             get_string('ienrol', 'local_coursesshowcase')."</button></a></p>";
@@ -362,7 +362,7 @@ if ($category->idnumber != "Culture" && $category->idnumber != "Numérique") {
            // //A retirer pour ouvrir les choix. LAURENTHACKED
            //
 
-            if ($CFG->currenttermregistrationstart <= $now && $now < $CFG->currenttermregistrationend) {
+            if ($config->currenttermregistrationstart <= $now && $now < $config->currenttermregistrationend) {
 
                 // Bouton "J'aurais voulu choisir cette UE".
                 echo '<p>'.get_string('noroomleft', 'local_coursesshowcase').'</p>';

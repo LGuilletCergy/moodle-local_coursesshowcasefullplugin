@@ -92,7 +92,7 @@ function local_coursesshowcase_goodcohort() {
         // Un peu LAURENTHACK pour ne pas donner tous les accès aux LSH au semestre 1.
 
         $cohortmember4 = $DB->get_record('cohort_members', array('userid' => $USER->id, 'cohortid' => 393));
-        if ($cohortmember4 && $CFG->currentterm == 2) {
+        if ($cohortmember4 && $config->currentterm == 2) {
 
             $goodcohort = true;
         }
@@ -117,6 +117,8 @@ function local_coursesshowcase_extend_settings_navigation(settings_navigation $n
 
     global $CFG, $COURSE, $DB, $PAGE, $USER;
 
+    $uelibrecourse = $DB->get_record('courses', array ('idnumber' => 'UELIBRES'));
+
     if ($COURSE->id > 1) {
 
         $branch = $nav->get('courseadmin');
@@ -136,7 +138,7 @@ function local_coursesshowcase_extend_settings_navigation(settings_navigation $n
 
         $PAGE->set_pagelayout('standard');
         $PAGE->set_heading(get_string('choosecourses', 'local_coursesshowcase'));
-        $term = optional_param('term', $CFG->currentterm, PARAM_INT);
+        $term = optional_param('term', $config->currentterm, PARAM_INT);
         $categorystyle = "";
         $categories = $DB->get_records('course_categories', array(), 'name');
 
@@ -683,7 +685,7 @@ function local_coursesshowcase_freerooms($coursecontext, $coursedata) {
     global $DB, $CFG;
 
     $sql = "SELECT DISTINCT userid FROM {role_assignments} WHERE roleid = 5 AND"
-            . " contextid = $coursecontext->id AND timemodified > $CFG->currenttermregistrationstart";
+            . " contextid = $coursecontext->id AND timemodified > $config->currenttermregistrationstart";
     $students = $DB->get_records_sql($sql);
 
     $nbstudents = count($students);
@@ -708,7 +710,7 @@ function local_coursesshowcase_unenrol($userid) {
     global $DB, $CFG;
     $userenrolments = $DB->get_records('user_enrolments', array('userid' => $userid));
     foreach ($userenrolments as $userenrolment) {
-        if ($userenrolment->timecreated < $CFG->currenttermregistrationstart) {
+        if ($userenrolment->timecreated < $config->currenttermregistrationstart) {
             continue;
         }
         $enrolmethod = $DB->get_record('enrol', array('id' => $userenrolment->enrolid));
@@ -748,7 +750,7 @@ function local_coursesshowcase_previouscourses() {
     $userenrolments = $DB->get_records('user_enrolments', array('userid' => $USER->id));
 
     foreach ($userenrolments as $userenrolment) {
-        if ($userenrolment->timecreated < $CFG->currenttermregistrationstart) {
+        if ($userenrolment->timecreated < $config->currenttermregistrationstart) {
             continue;
         }
         $enrolmethod = $DB->get_record('enrol', array('id' => $userenrolment->enrolid));

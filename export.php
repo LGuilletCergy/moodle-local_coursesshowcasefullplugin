@@ -38,6 +38,8 @@ require_once("$CFG->dirroot/blocks/mytermcourses/lib.php");
 // Style for category titles.
 $bgcolor = '#b731472';
 
+// A modifier pour rendre le plugin 100% indépendant de fordson.
+
 if ($CFG->theme == 'fordson') {
 
     $fordsonconfig = get_config('theme_fordson');
@@ -84,7 +86,7 @@ if ($courses) {
         echo '</div>';
         echo '<br><br>';
     }
-    
+
     echo "</div>";
 }
 

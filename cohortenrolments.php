@@ -122,7 +122,7 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
 
         foreach ($studentassignments as $studentassignment) {
 
-            if ($studentassignment->timemodified < $CFG->currenttermregistrationstart) {
+            if ($studentassignment->timemodified < $config->currenttermregistrationstart) {
                 continue;
             }
 //~ global $USER; if ($USER->username == 'berrando') print_object($studentassignment);
@@ -154,7 +154,7 @@ function local_coursesshowcase_cohortuserlines($cohort, $code) {
 
         foreach ($studentwishes as $studentwish) {
 
-            if ($studentwish->timecreated < $CFG->currenttermregistrationstart) {
+            if ($studentwish->timecreated < $config->currenttermregistrationstart) {
                 continue;
             }
             $wishcourse = $DB->get_record('course', array('id' => $studentwish->courseid));
